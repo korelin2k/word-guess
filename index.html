@@ -1,0 +1,49 @@
+<!DOCTYPE <!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Game of Thrones - Hodor's Favorite Characters</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="assets/javascript/jquery-3.3.1.min.js"></script>
+    <script src="assets/javascript/popper.min.js"></script>
+    <script src="assets/javascript/bootstrap.min.js"></script>
+    <script src="assets/javascript/game.js"></script>
+    <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-3">
+                <p>Pic Here</p>
+            </div>
+            <div class="col-6 p-3">
+                <div class="jumbotron">
+                    <h1 id="wordplay">Press a key to start</h1>
+                    <h3 id="guesses"></h3>
+                    <h3 id="gamestatus"></h3>
+                </div>
+            </div>
+            <div class="col-3 p-3">
+                <ul class="list-group">
+                    <li class="list-group-item active">Scoreboard</li>
+                    <li class="list-group-item">Wins: <span id="wins">0</span></li>
+                    <li class="list-group-item">Losses: <span id="loss">0</span></li>
+                    <li class="list-group-item">Guessed: <span id="guessed">0</span></li>
+                    <li class="list-group-item">Left: <span id="left">0</span></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+        // Basics in the html - the rest of the "goodies" are in game.js
+        game.startGame();
+
+        document.onkeyup = function(event) {
+            var userGuess = event.key;
+            game.checkLetter(userGuess);
+        }
+    </script>
+</html>
