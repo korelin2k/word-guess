@@ -34,6 +34,16 @@ var game = {
     endGame: function (status) {
         if(status === 'win') {
             this.wins++;
+
+            var audio = new Audio('assets/audio/game_of_thrones.mp3');
+
+            audio.play();
+            audio.addEventListener("canplaythrough", function () {
+                setTimeout(function(){
+                    audio.pause();
+                },
+                8000);
+            }, false); 
         } else if (status === 'loss') {
             this.losses++;
         } else {

@@ -2,3 +2,11 @@
     text-transform: capitalize;
     letter-spacing: 5px;
 }
+
+#got-image {
+    background-image: url("../images/game_of_thrones.jpg");
+    background-repeat: no-repeat !important;
+    background-size: cover !important;
+    background-position: center;
+    background-color: #000;
+}
