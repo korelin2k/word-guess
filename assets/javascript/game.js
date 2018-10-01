@@ -1,5 +1,6 @@
 var game = {
-    wordChoices: ['Khaleesi', 'Arya'],
+    wordChoices: ['Khaleesi', 'Arya', 'Targaryen', 'Snow', 'Cersei', 'Tyrion', 'Tywin', 
+    'Lannister', 'Stark', 'Sansa', 'Drogon', 'Rhaegal', 'Viserion'],
     wordHidden: "",
     wordGuess: "",
     guessCount: 0,
@@ -32,18 +33,18 @@ var game = {
     },
 
     endGame: function (status) {
-        if(status === 'win') {
+        if (status === 'win') {
             this.wins++;
 
             var audio = new Audio('assets/audio/got.mp3');
 
             audio.play();
             audio.addEventListener("canplaythrough", function () {
-                setTimeout(function(){
+                setTimeout(function () {
                     audio.pause();
                 },
-                8000);
-            }, false); 
+                    3000);
+            }, false);
         } else if (status === 'loss') {
             this.losses++;
         } else {
@@ -92,7 +93,7 @@ var game = {
                 // Check if player won
                 if ((this.wordHidden.toLowerCase().indexOf('_')) === -1) {
                     this.endGame('win');
-                // Check if player loss
+                    // Check if player loss
                 } else if (this.guessCount === this.randomGuesses) {
                     this.endGame('loss');
                 }
