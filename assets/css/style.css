@@ -1,12 +1,20 @@
+body {
+    background-color: rgb(95, 127, 181);
+}
+
 #wordplay {
     text-transform: capitalize;
     letter-spacing: 5px;
 }
 
-#got-image {
-    background-image: url("../images/game_of_thrones.jpg");
+.custom-container {
+    max-width: 800px;
+    background-image: url("../images/khaleesi-custom.jpg");
     background-repeat: no-repeat !important;
     background-size: cover !important;
     background-position: center;
-    background-color: #000;
+}
+
+.custom-opacity {
+    opacity: .7;
 }

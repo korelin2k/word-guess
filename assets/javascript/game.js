@@ -35,7 +35,7 @@ var game = {
         if(status === 'win') {
             this.wins++;
 
-            var audio = new Audio('assets/audio/game_of_thrones.mp3');
+            var audio = new Audio('assets/audio/got.mp3');
 
             audio.play();
             audio.addEventListener("canplaythrough", function () {
