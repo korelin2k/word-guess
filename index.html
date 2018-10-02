@@ -16,7 +16,7 @@
     <div class="container-fluid margin-auto custom-container border-left border-right border-secondary p-5 h-100">
         <div class="row custom-opacity">
             <div class="col-lg-12">
-                <div class="jumbotron h-50">
+                <div class="jumbotron h-50" id="status-screen">
                     <h1 id="wordplay">Press a key to start</h1>
                     <h3 id="guesses"></h3>
                     <h3 id="gamestatus"></h3>
@@ -30,19 +30,10 @@
                     <li class="list-group-item">Wins: <span id="wins">0</span></li>
                     <li class="list-group-item">Losses: <span id="loss">0</span></li>
                     <li class="list-group-item">Guessed: <span id="guessed">0</span></li>
-                    <li class="list-group-item">Left: <span id="left">0</span></li>
+                    <li class="list-group-item">Guesses Left: <span id="left">0</span></li>
                 </ul>
             </div>
         </div>
     </div>
 </body>
-<script>
-        // Basics in the html - the rest of the "goodies" are in game.js
-        game.startGame();
-
-        document.onkeyup = function(event) {
-            var userGuess = event.key;
-            game.checkLetter(userGuess);
-        }
-    </script>
 </html>

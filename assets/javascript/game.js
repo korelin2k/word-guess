@@ -17,7 +17,7 @@ var game = {
     },
 
     startGame: function () {
-        // Reset Parameters
+        // Set & Reset Parameters
         this.randomizeGuesses();
         this.randomWord();
         this.guessCount = 0;
@@ -27,37 +27,24 @@ var game = {
 
         document.getElementById("wordplay").innerHTML = "Press a key to start";
         document.getElementById("gamestatus").innerHTML = "";
-        document.getElementById("guesses").innerHTML = this.guessLetters;
-        document.getElementById("guessed").innerHTML = this.guessLetters.length;
-        document.getElementById("left").innerHTML = (this.randomGuesses - this.guessLetters.length);
+        this.updateHTML();
     },
 
     endGame: function (status) {
         if (status === 'win') {
             this.wins++;
-
-            var audio = new Audio('assets/audio/got.mp3');
-
-            audio.play();
-            audio.addEventListener("canplaythrough", function () {
-                setTimeout(function () {
-                    audio.pause();
-                },
-                    3000);
-            }, false);
+            this.playAudio();
         } else if (status === 'loss') {
             this.losses++;
         } else {
-            console.log("How'd you get here...?")
+            console.log("How'd you get here...?");
         }
-        document.getElementById("wins").innerHTML = this.wins;
-        document.getElementById("loss").innerHTML = this.losses;
         document.getElementById("gamestatus").innerHTML = "Press enter to start a new game";
         this.gameover = true;
+        this.updateHTML();
     },
 
     checkLetter: function (choice) {
-        console.log(choice);
         // Run some basic validation before anything else
         // 1) Check to see if any key has been hit to trigger the word
         // 2) Check to see if the input is a letter
@@ -70,9 +57,9 @@ var game = {
                 // Declare variables
                 var pos = 0;
                 var i = -1;
+                var letterFound = false;
 
                 // Increment Values
-                this.guessCount++;
                 this.guessLetters.push(choice);
 
                 // Search the string and return the locations of the letter (if they exist)
@@ -82,13 +69,16 @@ var game = {
 
                     if (pos != -1) {
                         this.wordHidden = this.wordHidden.replaceAt(pos, choice.toLowerCase());
+                        letterFound = true;
                     }
                 }
 
+                if(!letterFound) {
+                    this.guessCount++;
+                }
+
+                this.updateHTML();
                 document.getElementById("wordplay").innerHTML = this.wordHidden;
-                document.getElementById("guesses").innerHTML = this.guessLetters;
-                document.getElementById("guessed").innerHTML = this.guessLetters.length;
-                document.getElementById("left").innerHTML = (this.randomGuesses - this.guessLetters.length);
 
                 // Check if player won
                 if ((this.wordHidden.toLowerCase().indexOf('_')) === -1) {
@@ -98,10 +88,29 @@ var game = {
                     this.endGame('loss');
                 }
             } else if (choice == "Enter") {
-                console.log("here");
                 this.startGame();
             }
         }
+    },
+
+    updateHTML: function() {
+        document.getElementById("wins").innerHTML = this.wins;
+        document.getElementById("loss").innerHTML = this.losses;
+        document.getElementById("guesses").innerHTML = this.guessLetters.join(" ");
+        document.getElementById("guessed").innerHTML = this.guessLetters.length;
+        document.getElementById("left").innerHTML = (this.randomGuesses - this.guessCount);
+    },
+
+    playAudio: function() {
+        var audio = new Audio('assets/audio/got.mp3');
+
+        audio.play();
+        audio.addEventListener("canplaythrough", function () {
+            setTimeout(function () {
+                audio.pause();
+            },
+                3000);
+        }, false);
     },
 
     randomizeGuesses: function () {
@@ -120,6 +129,18 @@ var game = {
         this.losses++;
     }
 };
+
+
+// Load the javascript when the page starts up
+window.onload = function() {
+    // Basics in the html - the rest of the "goodies" are in game.js
+    game.startGame();
+
+    document.onkeyup = function(event) {
+        var userGuess = event.key;
+        game.checkLetter(userGuess);
+    }
+}
 
 // Grabbed this bit of code from:
 // https://stackoverflow.com/questions/1431094/how-do-i-replace-a-character-at-a-particular-index-in-javascript
