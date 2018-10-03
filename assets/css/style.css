@@ -20,3 +20,8 @@ body {
 .custom-opacity {
     opacity: .9;
 }
+
+#status-msg {
+    font-weight: bold;
+    text-align: center;
+}

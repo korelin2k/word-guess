@@ -90,12 +90,18 @@ var game = {
 
             this.gameWin();
             this.playAudio();
+            this.wordHidden = "";
+            document.getElementById("status-msg").innerText = "Winner! Hodor Lives!";
             document.getElementsByClassName("custom-container")[0].style.backgroundImage = "url("+imagePath+")";
         } else if (status === 'loss') {
             this.gameLoss();
+            document.getElementById("status-msg").innerText = "Hodor Died!";
         } else {
             console.log("How'd you get here...?");
         }
+
+        this.guessLetters = [];
+        document.getElementById("wordplay").innerHTML = "";
         document.getElementById("gamestatus").innerHTML = "Press enter to start a new game";
         this.gameover = true;
         this.updateHTML();
@@ -121,10 +127,6 @@ var game = {
      * @wordplay
      */
     checkLetter: function (choice) {
-        // Run some basic validation before anything else
-        // 1) Check to see if any key has been hit to trigger the word
-        // 2) Check to see if the input is a letter
-        // 3) Check to see if the letter has been guessed
         if (this.gamemsg === false) {
             document.getElementById("wordplay").innerHTML = this.wordHidden;
             this.gamemsg = true;
@@ -165,6 +167,7 @@ var game = {
                 }
             } else if (choice == "Enter") {
                 this.startGame();
+                document.getElementById("status-msg").innerText = "";
             }
         }
     },
