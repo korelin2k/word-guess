@@ -9,9 +9,11 @@ body {
 
 .custom-container {
     max-width: 800px;
-    background-image: url("../images/khaleesi-custom.jpg");
+    min-width: 350px;
+    background-image: url("../images/game-of-thrones.jpg");
     background-repeat: no-repeat !important;
     background-size: cover !important;
+    background-size: cover; -ms-background-size: cover; -o-background-size: cover; -moz-background-size: cover; -webkit-background-size: cover;
     background-position: center;
 }
 

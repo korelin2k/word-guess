@@ -1,21 +1,69 @@
+/**
+ * Game object for word-guess - contains all the parameters and functions 
+ * needed to support the game. 
+ */
 var game = {
-    wordChoices: ['Khaleesi', 'Arya', 'Targaryen', 'Snow', 'Cersei', 'Tyrion', 'Tywin', 
-    'Lannister', 'Stark', 'Sansa', 'Drogon', 'Rhaegal', 'Viserion'],
+
+    // Defining the word options available
+    wordChoices: [
+        ['Khaleesi', 'khaleesi-custom.jpg'],
+        ['Arya', 'arya.jpg'],
+        ['Targaryen', 'targaryen.jpg'],
+        ['Snow', 'snow.jpg'],
+        ['Cersei', 'cersei.jpg'],
+        ['Tyrion', 'tyrion.jpg'],
+        ['Tywin', 'tywin.jpg'],
+        ['Lannister', 'lannister.jpg'],
+        ['Stark', 'stark.jpg'],
+        ['Sansa', 'sansa.jpg'],
+        ['Dragon', 'dragon.jpg'],
+        ['Rhaegal', 'rhaegal.jpg'],
+        ['Viserion', 'viserion.jpg']
+    ],
+
+    // Defining the word hidden (basically will be wordGuess with _ 
+    // replacing characters until guessed)
     wordHidden: "",
+
+    // One of the first functions called randomizes this word based on the word
+    // choices above
     wordGuess: "",
+
+    // Keeps track of how many times a user has incorrectly guessed the letter
     guessCount: 0,
+
+    // Array to keep track of the actual letters guessed
     guessLetters: [],
+
+    // How many guesses are available for a user
     randomGuesses: 0,
+
+    // Keeps track of the number of wins
     wins: 0,
+
+    // Keeps track of the number of losses
     losses: 0,
+
+    // Needed to keep track for "enter" to start a fresh new game
     gameover: false,
+
+    // Custom message only being delivered in a new game scenario
     gamemsg: false,
 
+    /**
+     * Selects a random word from wordChoices and then obfuscates wordHidden
+     */
     randomWord: function () {
         this.wordGuess = this.wordChoices[Math.floor(Math.random() * this.wordChoices.length)];
-        this.wordHidden = this.wordGuess.replace(/./g, '_')
+        this.wordHidden = this.wordGuess[0].replace(/./g, '_')
     },
 
+    /**
+     * Triggers the start of the game - either a fresh or "reset" on variables as well
+     * DOM elements:
+     * @wordplay
+     * @gamestatus
+     */
     startGame: function () {
         // Set & Reset Parameters
         this.randomizeGuesses();
@@ -30,12 +78,21 @@ var game = {
         this.updateHTML();
     },
 
+    /**
+     * Triggers the end of the game with an associated audio clip and game increments (win/loss)
+     * DOM elements:
+     * @custom-container (background-image)
+     * @gamestatus
+     */
     endGame: function (status) {
         if (status === 'win') {
-            this.wins++;
+            var imagePath = 'assets/images/' + this.wordGuess[1];
+
+            this.gameWin();
             this.playAudio();
+            document.getElementsByClassName("custom-container")[0].style.backgroundImage = "url("+imagePath+")";
         } else if (status === 'loss') {
-            this.losses++;
+            this.gameLoss();
         } else {
             console.log("How'd you get here...?");
         }
@@ -44,6 +101,25 @@ var game = {
         this.updateHTML();
     },
 
+    /**
+     * Critical function for gameplay - does three checks first:
+     * 1) Check to see if any key has been hit to trigger the word
+     * 2) Check to see if the input is a letter
+     * 3) Check to see if the letter has been guessed
+     * 
+     * After that and assuming it does not meet those requirements, it checks if the letter
+     * in the word.
+     * - If it does: removes the abstraction (wordHidden) letters
+     * - If it doesn't: increments the guessLetters variable
+     * 
+     * At the end of this, it will check to see if the game is over (win or loss)
+     * 
+     * Parameters:
+     * @choice - key letter passed in
+     * 
+     * DOM elements:
+     * @wordplay
+     */
     checkLetter: function (choice) {
         // Run some basic validation before anything else
         // 1) Check to see if any key has been hit to trigger the word
@@ -64,7 +140,7 @@ var game = {
 
                 // Search the string and return the locations of the letter (if they exist)
                 while (pos != -1) {
-                    pos = this.wordGuess.toLowerCase().indexOf(choice, i + 1);
+                    pos = this.wordGuess[0].toLowerCase().indexOf(choice, i + 1);
                     i = pos;
 
                     if (pos != -1) {
@@ -74,7 +150,7 @@ var game = {
                 }
 
                 if(!letterFound) {
-                    this.guessCount++;
+                    this.guess();
                 }
 
                 this.updateHTML();
@@ -93,6 +169,15 @@ var game = {
         }
     },
 
+    /**
+     * Primary function that updates individual selectors in the html
+     * DOM elements:
+     * @wins
+     * @losses
+     * @guesses
+     * @guessed
+     * @left
+     */
     updateHTML: function() {
         document.getElementById("wins").innerHTML = this.wins;
         document.getElementById("loss").innerHTML = this.losses;
@@ -101,6 +186,9 @@ var game = {
         document.getElementById("left").innerHTML = (this.randomGuesses - this.guessCount);
     },
 
+     /**
+     * Plays some smooth jazz.
+     */
     playAudio: function() {
         var audio = new Audio('assets/audio/got.mp3');
 
@@ -113,18 +201,31 @@ var game = {
         }, false);
     },
 
+    /**
+     * Randomize the number of guesses the user has left. This is hard mode!
+     * Modify if you're a weak person.
+     */
     randomizeGuesses: function () {
-        this.randomGuesses = Math.floor(Math.random() * 5) + 10;
+        this.randomGuesses = Math.floor(Math.random() * 5) + 5;
     },
 
+     /**
+     * Simple incrementer for the number of guesses
+     */   
     guess: function () {
         this.guessCount++;
     },
 
+    /**
+     * Simple incrementer for the gameWin
+     */   
     gameWin: function () {
         this.wins++;
     },
 
+    /**
+     * Simple incrementer for the gameLoss
+     */   
     gameLoss: function () {
         this.losses++;
     }
@@ -132,6 +233,7 @@ var game = {
 
 
 // Load the javascript when the page starts up
+// Learned this before the jQuery ease of use demo that was shown... :)
 window.onload = function() {
     // Basics in the html - the rest of the "goodies" are in game.js
     game.startGame();
