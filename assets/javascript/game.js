@@ -83,6 +83,8 @@ var game = {
      * DOM elements:
      * @custom-container (background-image)
      * @gamestatus
+     * @satatus-msg
+     * @wordplay
      */
     endGame: function (status) {
         if (status === 'win') {
