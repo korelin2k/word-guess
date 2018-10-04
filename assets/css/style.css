@@ -9,7 +9,7 @@ body {
 
 .custom-container {
     max-width: 800px;
-    min-width: 350px;
+    min-width: 300px;
     background-image: url("../images/game-of-thrones.jpg");
     background-repeat: no-repeat !important;
     background-size: cover; -ms-background-size: cover; -o-background-size: cover; -moz-background-size: cover; -webkit-background-size: cover;
