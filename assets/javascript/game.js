@@ -14,6 +14,10 @@ var game = {
         ['Tywin Lannister', 'tywin.jpg'],
         ['Sansa Stark', 'sansa.jpg'],
         ['Dragon', 'dragon.jpg'],
+        ['Robert Baratheon', 'robert-baratheon.jpg'],
+        ['Joffrey Lannister', 'joffrey.jpg'],
+        ['Oberyn Martell', 'oberyn.jpg'],
+        ['Margaery Tyrell', 'margaery.jpg']
     ],
 
     // Defining the word hidden (basically will be wordGuess with _ 
