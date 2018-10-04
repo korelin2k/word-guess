@@ -11,11 +11,10 @@ var game = {
         ['Jon Snow', 'snow.jpg'],
         ['Cersei Lannister', 'cersei.jpg'],
         ['Tyrion Lannister', 'tyrion.jpg'],
-        ['Tywin Lannister', 'tywin.jpg'],
         ['Sansa Stark', 'sansa.jpg'],
         ['Dragon', 'dragon.jpg'],
         ['Robert Baratheon', 'robert-baratheon.jpg'],
-        ['Joffrey Lannister', 'joffrey.jpg'],
+        ['Joffrey Baratheon', 'joffrey.jpg'],
         ['Oberyn Martell', 'oberyn.jpg'],
         ['Margaery Tyrell', 'margaery.jpg']
     ],
