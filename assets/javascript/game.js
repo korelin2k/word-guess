@@ -319,6 +319,5 @@ String.prototype.replaceAt = function (index, replacement) {
 //
 // Checking to see if a character input is valid
 function isLetter(str) {
-    console.log(str);
     return str.length === 1 && str.match(/[a-z]/i);
 }
