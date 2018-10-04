@@ -131,7 +131,11 @@ var game = {
         if (this.gamemsg === false) {
             document.getElementById("wordplay").innerHTML = this.wordHidden;
             this.gamemsg = true;
+        } else if (choice == "Enter") {
+            this.startGame();
+            document.getElementById("status-msg").innerText = "";
         } else {
+            choice = choice.toLowerCase();
             if (isLetter(choice) && this.guessLetters.indexOf(choice) === -1 && !this.gameover) {
                 // Declare variables
                 var pos = 0;
@@ -166,9 +170,6 @@ var game = {
                 } else if (this.guessCount === this.randomGuesses) {
                     this.endGame('loss');
                 }
-            } else if (choice == "Enter") {
-                this.startGame();
-                document.getElementById("status-msg").innerText = "";
             }
         }
     },
@@ -318,5 +319,6 @@ String.prototype.replaceAt = function (index, replacement) {
 //
 // Checking to see if a character input is valid
 function isLetter(str) {
-    return str.length === 1 && str.match(/[a-zA-Z]/i);
+    console.log(str);
+    return str.length === 1 && str.match(/[a-z]/i);
 }
