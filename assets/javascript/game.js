@@ -6,19 +6,14 @@ var game = {
 
     // Defining the word options available
     wordChoices: [
-        ['Khaleesi', 'khaleesi-custom.jpg'],
-        ['Arya', 'arya.jpg'],
-        ['Targaryen', 'targaryen.jpg'],
-        ['Snow', 'snow.jpg'],
-        ['Cersei', 'cersei.jpg'],
-        ['Tyrion', 'tyrion.jpg'],
-        ['Tywin', 'tywin.jpg'],
-        ['Lannister', 'lannister.jpg'],
-        ['Stark', 'stark.jpg'],
-        ['Sansa', 'sansa.jpg'],
+        ['Daenerys Targaryen', 'daenerys.jpg'],
+        ['Arya Stark', 'arya.jpg'],
+        ['Jon Snow', 'snow.jpg'],
+        ['Cersei Lannister', 'cersei.jpg'],
+        ['Tyrion Lannister', 'tyrion.jpg'],
+        ['Tywin Lannister', 'tywin.jpg'],
+        ['Sansa Stark', 'sansa.jpg'],
         ['Dragon', 'dragon.jpg'],
-        ['Rhaegal', 'rhaegal.jpg'],
-        ['Viserion', 'viserion.jpg']
     ],
 
     // Defining the word hidden (basically will be wordGuess with _ 
@@ -55,7 +50,7 @@ var game = {
      */
     randomWord: function () {
         this.wordGuess = this.wordChoices[Math.floor(Math.random() * this.wordChoices.length)];
-        this.wordHidden = this.wordGuess[0].replace(/./g, '_')
+        this.wordHidden = this.wordGuess[0].replace(/\w/g, '_')
     },
 
     /**
@@ -93,6 +88,7 @@ var game = {
             this.gameWin();
             this.playAudio();
             this.wordHidden = "";
+            this.characterStats(this.wordGuess[0]);
             document.getElementById("status-msg").innerText = "Winner! Hodor Lives!";
             document.getElementsByClassName("custom-container")[0].style.backgroundImage = "url("+imagePath+")";
         } else if (status === 'loss') {
@@ -204,6 +200,62 @@ var game = {
             },
                 3000);
         }, false);
+    },
+
+    /**
+     * Turns out, there's a fantastic API for Game of Thrones... couldn't help but
+     * leverage it and populate some character facts.
+     * 
+     * DOM elements:
+     * @dob
+     * @gender
+     * @culture
+     * @house
+     * 
+     * Parameters:
+     * @name - Character to search for
+     */
+    characterStats: function(name) {
+        var restCall = 'https://api.got.show/api/characters/' + name.replace(/ /g, "%20");
+        var gender = "";
+        var dob = "";
+        var culture = "";
+        var house = "";
+
+        $.ajax({
+            url: restCall
+        }).then(function(info) {
+            var gender = "";
+            if( info.data.male === true ) {
+                gender = "male";
+            } else {
+                gender = "female";
+            }
+
+            if (typeof info.data.dateOfBirth === 'undefined') {
+                dob = 'Not Available';
+            } else {
+                dob = info.data.dateOfBirth;
+            }
+
+            if (typeof info.data.culture === 'undefined') {
+                culture = 'Not Available';
+            } else {
+                culture = info.data.culture;
+            }
+
+            if (typeof info.data.house === 'undefined') {
+                house = 'Not Available';
+            } else {
+                house = info.data.house;
+            }
+
+            $('#character-name').text(name);
+            $('#dob').text('DOB: ' + dob);
+            $('#gender').text('Gender: ' + gender);
+            $('#culture').text('Culture: ' + culture);
+            $('#house').text('House: ' + house);
+        });
     },
 
     /**
