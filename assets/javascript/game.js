@@ -186,7 +186,7 @@ var game = {
     updateHTML: function() {
         document.getElementById("wins").innerHTML = this.wins;
         document.getElementById("loss").innerHTML = this.losses;
-        document.getElementById("guesses").innerHTML = this.guessLetters.join(" ");
+        document.getElementById("guesses").innerHTML = this.guessLetters.join(" ").toUpperCase();
         document.getElementById("guessed").innerHTML = this.guessLetters.length;
         document.getElementById("left").innerHTML = (this.randomGuesses - this.guessCount);
     },
