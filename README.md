@@ -8,3 +8,5 @@
 2. Bootstrap 4 was leveraged with very basic additional styling
 3. Responsive design, but couldn't use touch for mobile (/sad)
 
+### Linkage
+https://korelin2k.github.io/word-guess/index.html
